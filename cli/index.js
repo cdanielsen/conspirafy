@@ -4,9 +4,6 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { conspirafy } from '../dist/index.js';
 
-// const yargs = require('yargs');
-// const { conspirafy } = require('../dist');
-
 yargs(hideBin(process.argv))
   .command(
     '$0 <text>',

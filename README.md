@@ -24,6 +24,6 @@ console.log(conspirafiedText);
 Or on the command line
 
 ```sh
-npx conspirafy Fluoride is mind control
+npx conspirafy "Fluoride is mind control"
 > fLUoriDE IS mInD COntRoL
 ```
