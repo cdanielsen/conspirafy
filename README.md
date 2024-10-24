@@ -4,13 +4,13 @@
 
 ## Usage
 
-Install:
+Install
 
 ```sh
 npm i conspirafy
 ```
 
-Consume as an ESM module:
+Consume as an ESM module
 
 ```typescript
 import { conspirafy } from 'conspirafy';

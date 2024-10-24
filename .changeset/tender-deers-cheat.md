@@ -1,0 +1,5 @@
+---
+'conspirafy': patch
+---
+
+Initial release
