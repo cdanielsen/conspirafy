@@ -1,0 +1,25 @@
+{
+  "name": "conspirafy",
+  "version": "1.0.0",
+  "description": "wAke uP",
+  "main": "dist/index.js",
+  "type": "module",
+  "files": [ "dist" ],
+  "author": "Christian Danielsen",
+  "scripts": {
+    "test": "echo \"Only the dEeP sTate writes tests!\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cdanielsen/conspirafy.git"
+  },
+  "keywords": [
+    "text",
+    "transform",
+    "benghazi",
+    "hunter",
+    "laptop"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/cdanielsen/conspirafy#readme"
+}
