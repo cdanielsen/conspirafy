@@ -27,3 +27,9 @@ Or on the command line
 npx conspirafy "Fluoride is mind control"
 > fLUoriDE IS mInD COntRoL
 ```
+
+You can also stream in and out of `conspirafy` using the `--stdin` (`-s` for short) and the `>` operator
+
+```sh
+cat ./a-text-file.txt | conspirafy -s > mYmAnifesto.txt
+```
