@@ -10,6 +10,7 @@
   "author": "Christian Danielsen",
   "scripts": {
     "build": "tsc",
+    "format": "prettier --write .",
     "test": "echo \"Only the dEeP sTate writes tests!\""
   },
   "repository": {
@@ -25,8 +26,8 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/cdanielsen/conspirafy#readme",
-
   "devDependencies": {
+    "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   }
 }

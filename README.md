@@ -13,25 +13,23 @@ npm i conspirafy
 Consume as an ESM module:
 
 ```typescript
-import { conspirafy } from 'conspirafy'
+import { conspirafy } from 'conspirafy';
 
-const conspirafiedText = conspirafy('What about her emails?')
+const conspirafiedText = conspirafy('What about her emails?');
 
-console.log(conspirafiedText)
+console.log(conspirafiedText);
 // > wHaT ABouT hER EmAIls?
-
 ```
 
 Or as a CommonJS module:
 
 ```typescript
-const conspirafy = require('conspirafy')
+const conspirafy = require('conspirafy');
 
-const conspirafiedText = conspirafy('Let me tell you about chemtrails, man')
+const conspirafiedText = conspirafy('Let me tell you about chemtrails, man');
 
-console.log(conspirafiedText)
+console.log(conspirafiedText);
 // > lET mE TElL YoU aBOUt cHeMtRaILS, mAn
-
 ```
 
 Or on the command line
