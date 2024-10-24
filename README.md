@@ -21,17 +21,6 @@ console.log(conspirafiedText);
 // > wHaT ABouT hER EmAIls?
 ```
 
-Or as a CommonJS module:
-
-```typescript
-const conspirafy = require('conspirafy');
-
-const conspirafiedText = conspirafy('Let me tell you about chemtrails, man');
-
-console.log(conspirafiedText);
-// > lET mE TElL YoU aBOUt cHeMtRaILS, mAn
-```
-
 Or on the command line
 
 ```sh
