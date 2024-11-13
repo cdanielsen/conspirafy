@@ -3,7 +3,7 @@ import { pipeline } from 'node:stream/promises';
 import { stdin, stdout } from 'node:process';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { conspirafy } from '../dist/index.js';
+import { conspirafy } from './conspirafy.js';
 import { Transform } from 'node:stream';
 
 yargs(hideBin(process.argv))
