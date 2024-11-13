@@ -10,8 +10,7 @@ interface Options {
   stdin: boolean;
 }
 
-const runCommand = async (text: string | undefined, opts: Options) => {
-  console.log({ text });
+export const runCommand = async (text: string | undefined, opts: Options) => {
   if (!text && !opts.stdin) {
     console.error('You must pass a text argument if not using --stdin');
     process.exit(1);
