@@ -10,15 +10,19 @@ interface Options {
   stdin: boolean;
 }
 
+export enum ExitMessages {
+  NO_ARGS = 'You must pass either a text argument or --stdin',
+  BOTH_ARGS = 'You cannot pass both a text argument and --stdin',
+  STREAM_PROCESS = 'Failed to conspirafy stdin. Error message: ',
+}
+
 export const runCommand = async (text: string | undefined, opts: Options) => {
   if (!text && !opts.stdin) {
-    console.error('You must pass a text argument if not using --stdin');
-    process.exit(1);
+    return console.error(ExitMessages.NO_ARGS);
   }
 
   if (text && opts.stdin) {
-    console.error('You cannot pass a text argument if using --stdin');
-    process.exit(1);
+    return console.error(ExitMessages.BOTH_ARGS);
   }
 
   if (opts.stdin && !text) {
@@ -30,23 +34,31 @@ export const runCommand = async (text: string | undefined, opts: Options) => {
     });
     try {
       await pipeline(stdin, conspirafyText, stdout);
-      process.exit(0);
-    } catch (err) {
-      console.error('Failed to conspirafy stdin =/', err);
-      process.exit(1);
+      return;
+    } catch (streamError) {
+      console.log('here?');
+      return console.error(
+        ExitMessages.STREAM_PROCESS,
+        (streamError as Error).message,
+      );
     }
   }
 
   if (!opts.stdin && text) {
     const result = conspirafy(text);
     process.stdout.write(result);
+    return;
   }
 };
 
-program
-  .version('1.0.2', '-v, --vers', 'Output the current version')
-  .description('Conspirafy some text!')
-  .argument('[text]', 'The text to conspirafy')
-  .option('-s, --stdin', 'Read from stdin instead of passing text')
-  .action(runCommand)
-  .parse();
+const main = async () => {
+  await program
+    .version('1.0.2', '-v, --vers', 'Output the current version')
+    .description('Conspirafy some text!')
+    .argument('[text]', 'The text to conspirafy')
+    .option('-s, --stdin', 'Read from stdin instead of passing text')
+    .action(runCommand)
+    .parseAsync(process.argv);
+};
+
+main();
