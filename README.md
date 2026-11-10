@@ -27,3 +27,12 @@ Or on the command line
 npx conspirafy "Fluoride is mind control"
 > fLUoriDE IS mInD COntRoL
 ```
+
+Or pipe text in, as long as you don't pass any text as an argument
+
+```sh
+echo "Birds aren't real" | npx conspirafy
+> bIrDs ArEn't REaL
+
+cat ./a-text-file.txt | npx conspirafy > mYmAnifesto.txt
+```

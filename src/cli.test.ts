@@ -12,6 +12,14 @@ const packageJson = JSON.parse(
 const run = (...args: string[]) =>
   spawnSync(process.execPath, [cliPath, ...args], { encoding: 'utf8' });
 
+const runWithInput = (input: string, ...args: string[]) =>
+  spawnSync(process.execPath, [cliPath, ...args], { encoding: 'utf8', input });
+
+const cli = `"${process.execPath}" "${cliPath}"`;
+
+const runInShell = (command: string) =>
+  spawnSync('sh', ['-c', command], { encoding: 'utf8', timeout: 10_000 });
+
 const assertRejected = (result: ReturnType<typeof run>) => {
   assert.equal(result.status, 1);
   assert.equal(result.stdout, '');
@@ -39,7 +47,7 @@ describe('conspirafy CLI', () => {
     assertRejected(run('--foo', 'bar'));
   });
 
-  it('rejects missing text', () => {
+  it('rejects missing text when nothing is piped in', () => {
     assertRejected(run());
   });
 
@@ -64,6 +72,61 @@ describe('conspirafy CLI', () => {
 
   it('treats numeric text as a string', () => {
     assert.equal(run('007').stdout, '007\n');
+  });
+});
+
+describe('conspirafy CLI with piped input', () => {
+  it('conspirafies text from a shell pipe', () => {
+    const { status, stdout } = runInShell(`printf 'hello\\nworld\\n' | ${cli}`);
+    assert.equal(status, 0);
+    assert.equal(stdout.toLowerCase(), 'hello\nworld\n');
+  });
+
+  it('does not add a trailing newline', () => {
+    assert.equal(runWithInput('hello').stdout.toLowerCase(), 'hello');
+  });
+
+  it('prefers a text argument over piped input', () => {
+    assert.equal(runWithInput('ignored', 'foo').stdout.toLowerCase(), 'foo\n');
+  });
+
+  it('keeps multi-byte characters split across chunks', () => {
+    // Large enough to span several reads, and offset by one byte so that
+    // chunk boundaries land inside the four-byte emoji.
+    const input = `a${'😀'.repeat(100_000)}`;
+    assert.equal(runWithInput(input).stdout.toLowerCase(), input);
+  });
+
+  it('exits cleanly when the reader closes early', () => {
+    const { status, stdout, stderr } = runInShell(
+      `yes hello | ${cli} | head -1`,
+    );
+    assert.equal(status, 0);
+    assert.equal(stdout.toLowerCase(), 'hello\n');
+    assert.equal(stderr, '');
+  });
+
+  it('reports a stream failure', () => {
+    const breakStdin = `
+      import { Readable } from 'node:stream';
+      const stdin = new Readable({
+        read() {
+          this.destroy(new Error('boom'));
+        },
+      });
+      Object.defineProperty(process, 'stdin', { value: stdin });
+    `;
+    const { status, stderr } = spawnSync(
+      process.execPath,
+      [
+        '--import',
+        `data:text/javascript,${encodeURIComponent(breakStdin)}`,
+        cliPath,
+      ],
+      { encoding: 'utf8' },
+    );
+    assert.equal(status, 1);
+    assert.match(stderr, /Failed to conspirafy stdin: boom/);
   });
 });
 
