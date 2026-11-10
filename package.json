@@ -4,11 +4,10 @@
   "description": "wAke uP",
   "main": "dist/index.js",
   "bin": {
-    "conspirafy": "cli/index.js"
+    "conspirafy": "dist/cli.js"
   },
   "type": "module",
   "files": [
-    "cli",
     "dist"
   ],
   "engines": {
@@ -17,7 +16,7 @@
   "author": "Christian Danielsen",
   "scripts": {
     "build": "tsc",
-    "ci": "npm run build && npm test && npm run check:exports",
+    "ci": "npm run build && npm test && npm run check:exports && prettier --check .",
     "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "format": "prettier --write .",
     "test": "echo \"Only the dEeP sTate writes tests!\"",
@@ -43,8 +42,5 @@
     "@types/node": "^22.20.5",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
-  },
-  "dependencies": {
-    "yargs": "^17.7.2"
   }
 }
