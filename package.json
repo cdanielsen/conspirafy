@@ -11,6 +11,9 @@
     "cli",
     "dist"
   ],
+  "engines": {
+    "node": ">=22"
+  },
   "author": "Christian Danielsen",
   "scripts": {
     "build": "tsc",
@@ -19,7 +22,7 @@
     "format": "prettier --write .",
     "test": "echo \"Only the dEeP sTate writes tests!\"",
     "prepublishOnly": "npm run ci",
-    "release:local": "changeset version && npm install --package-lock-only && changeset publish"
+    "release:local": "changeset version && npm install --package-lock-only && git add package-lock.json && git commit --amend --no-edit && changeset publish"
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
     "@changesets/cli": "^2.27.9",
+    "@types/node": "^22.20.5",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   },
