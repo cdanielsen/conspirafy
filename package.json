@@ -14,12 +14,12 @@
   "author": "Christian Danielsen",
   "scripts": {
     "build": "tsc",
-    "ci": "run-s build test check:exports",
+    "ci": "npm run build && npm test && npm run check:exports",
     "check:exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
     "format": "prettier --write .",
     "test": "echo \"Only the dEeP sTate writes tests!\"",
     "prepublishOnly": "npm run ci",
-    "release:local": "changeset version && changeset publish"
+    "release:local": "changeset version && npm install --package-lock-only && changeset publish"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,6 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.16.4",
     "@changesets/cli": "^2.27.9",
-    "npm-run-all": "^4.1.5",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3"
   },
